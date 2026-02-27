@@ -1,0 +1,73 @@
+﻿@using MVC.Models
+@model EmployeeHolder
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EmployeeDetails</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+
+    @if (Model.employeeHolder != null && Model.employeeHolder.Any())
+    {
+        foreach (Employee item in Model.employeeHolder)
+        {
+            <!-- Welcome Section -->
+            <h1 class="mb-4">
+                Hello @item.last_name, @item.first_name! 👋
+            </h1>
+
+            <!-- Person Data Section -->
+            <div class="card p-4 shadow-sm">
+                <div class="mb-3">
+                    <label class="form-label">Employee ID</label>
+                    <input class="form-control" type="text" value="@item.employee_id" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="text" value="@item.email" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <input class="form-control" type="text" value="@item.gender" readonly>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <!-- Bootstrap Toast (Top Center) -->
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+            <div id="noDataToast" class="toast align-items-center text-bg-danger border-0 show" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        No data
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var toastEl = document.getElementById('noDataToast');
+            if (toastEl) {
+                var toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+                toast.show();
+            }
+        });
+    </script>
+</body>
+</html>
